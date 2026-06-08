@@ -33,6 +33,7 @@ const hubInputs = {
   contact: document.querySelector("#hub-contact"),
 };
 const identifyFile = document.querySelector("#identify-file");
+const identifyDropzone = document.querySelector("#identify-dropzone");
 const startCamera = document.querySelector("#start-camera");
 const stopCamera = document.querySelector("#stop-camera");
 const scannerVideo = document.querySelector("#scanner-video");
@@ -719,6 +720,30 @@ async function decodeImageFile(file) {
   return decodeCanvas(canvas);
 }
 
+function firstImageFile(files) {
+  return Array.from(files || []).find((file) => file.type.startsWith("image/"));
+}
+
+async function identifyImageFile(file) {
+  if (!file) {
+    statusText.textContent = "Drop, paste, or upload a QR image.";
+    return;
+  }
+
+  statusText.textContent = "Reading QR image...";
+  try {
+    const result = await decodeImageFile(file);
+
+    if (result) {
+      setDecodedResult(result);
+    } else {
+      statusText.textContent = "No QR code found in that image.";
+    }
+  } catch {
+    statusText.textContent = "Could not read that image.";
+  }
+}
+
 async function scanCameraFrame() {
   if (!scannerStream) {
     return;
@@ -839,18 +864,39 @@ removeLogo.addEventListener("click", () => {
 });
 
 identifyFile.addEventListener("change", async () => {
-  const file = identifyFile.files?.[0];
-  if (!file) {
-    return;
-  }
+  await identifyImageFile(firstImageFile(identifyFile.files));
+});
 
-  statusText.textContent = "Reading QR image...";
-  const result = await decodeImageFile(file);
+identifyDropzone.addEventListener("click", () => {
+  identifyDropzone.focus();
+  statusText.textContent = "Paste a QR image with Ctrl+V, or drag one into the box.";
+});
 
-  if (result) {
-    setDecodedResult(result);
+identifyDropzone.addEventListener("dragover", (event) => {
+  event.preventDefault();
+  identifyDropzone.classList.add("is-dragging");
+});
+
+identifyDropzone.addEventListener("dragleave", () => {
+  identifyDropzone.classList.remove("is-dragging");
+});
+
+identifyDropzone.addEventListener("drop", async (event) => {
+  event.preventDefault();
+  identifyDropzone.classList.remove("is-dragging");
+  await identifyImageFile(firstImageFile(event.dataTransfer?.files));
+});
+
+identifyDropzone.addEventListener("paste", async (event) => {
+  const file = firstImageFile(Array.from(event.clipboardData?.items || [])
+    .map((item) => (item.kind === "file" ? item.getAsFile() : undefined))
+    .filter(Boolean));
+
+  if (file) {
+    event.preventDefault();
+    await identifyImageFile(file);
   } else {
-    statusText.textContent = "No QR code found in that image.";
+    statusText.textContent = "Clipboard does not contain a QR image.";
   }
 });
 

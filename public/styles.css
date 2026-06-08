@@ -800,6 +800,45 @@ textarea {
   pointer-events: none;
 }
 
+.identify-dropzone {
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  min-height: 132px;
+  padding: 18px;
+  border: 1px dashed rgba(148, 163, 184, 0.86);
+  border-radius: 18px;
+  color: #34404a;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.34)),
+    rgba(248, 250, 252, 0.54);
+  text-align: center;
+  cursor: copy;
+}
+
+.identify-dropzone strong {
+  color: #20262d;
+  font-size: 15px;
+}
+
+.identify-dropzone span {
+  max-width: 360px;
+  color: #7a848e;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.identify-dropzone:focus,
+.identify-dropzone.is-dragging {
+  border-color: rgba(17, 24, 39, 0.5);
+  box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.06);
+  outline: 0;
+}
+
+.identify-dropzone.is-dragging {
+  background: rgba(255, 255, 255, 0.84);
+}
+
 #scanner-video {
   width: min(100%, 520px);
   aspect-ratio: 4 / 3;
@@ -1413,6 +1452,7 @@ input[type="color"]::-moz-color-swatch {
 .site-shell[data-theme="dark"] .hub-grid input,
 .site-shell[data-theme="dark"] .preset-control,
 .site-shell[data-theme="dark"] .preset-control select,
+.site-shell[data-theme="dark"] .identify-dropzone,
 .site-shell[data-theme="dark"] .identify-upload,
 .site-shell[data-theme="dark"] .identify-actions button,
 .site-shell[data-theme="dark"] .identify-result,
@@ -1433,6 +1473,10 @@ input[type="color"]::-moz-color-swatch {
 }
 
 .site-shell[data-theme="dark"] .identify-result p {
+  color: #eef3f7;
+}
+
+.site-shell[data-theme="dark"] .identify-dropzone strong {
   color: #eef3f7;
 }
 
