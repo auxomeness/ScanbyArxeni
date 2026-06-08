@@ -914,7 +914,42 @@ input[type="color"] {
   }
 
   .metrics {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .metric {
+    min-height: 0;
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .input-metric {
+    gap: 7px;
+  }
+
+  .input-metric input {
+    min-height: 36px;
+  }
+
+  .color-metric {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 8px 14px;
+  }
+
+  .color-metric > span {
+    align-self: center;
+  }
+
+  .color-metric label {
+    justify-content: flex-start;
+  }
+
+  input[type="color"] {
+    width: 34px;
+    height: 28px;
   }
 }
 
