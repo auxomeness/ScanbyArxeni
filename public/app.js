@@ -18,6 +18,7 @@ let debounceTimer;
 
 function params(format) {
   const search = new URLSearchParams({
+    format,
     data: input.value,
     level: level.value,
     margin: margin.value,
@@ -26,7 +27,7 @@ function params(format) {
     light: light.value,
   });
 
-  return `/api/qr.${format}?${search.toString()}`;
+  return `/api/qr?${search.toString()}`;
 }
 
 function setDisabled(disabled) {

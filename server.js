@@ -44,7 +44,7 @@ function getOptions(searchParams) {
 
 async function handleQr(req, res, url) {
   const data = url.searchParams.get("data") || "";
-  const format = url.pathname.endsWith(".svg") ? "svg" : "png";
+  const format = url.searchParams.get("format") === "svg" || url.pathname.endsWith(".svg") ? "svg" : "png";
 
   if (!data.trim()) {
     sendJson(res, 400, { error: "Enter text or a URL to generate a QR code." });
@@ -92,7 +92,7 @@ function serveStatic(req, res, url) {
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
 
-  if (url.pathname === "/api/qr.png" || url.pathname === "/api/qr.svg") {
+  if (url.pathname === "/api/qr" || url.pathname === "/api/qr.png" || url.pathname === "/api/qr.svg") {
     handleQr(req, res, url);
     return;
   }
