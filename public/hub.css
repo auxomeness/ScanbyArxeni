@@ -1,5 +1,11 @@
 :root {
-  color: #111827;
+  --hub-ink: #111827;
+  --hub-muted: #64707d;
+  --hub-panel: rgba(255, 255, 255, 0.92);
+  --hub-line: rgba(203, 213, 225, 0.86);
+  --hub-accent: #111827;
+  --hub-surface: #f8fafc;
+  color: var(--hub-ink);
   background: #eef2f6;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -11,6 +17,11 @@
   box-sizing: border-box;
 }
 
+html {
+  min-width: 320px;
+  background: #eef2f6;
+}
+
 body {
   min-width: 320px;
   min-height: 100vh;
@@ -19,95 +30,154 @@ body {
 
 .hub-shell {
   display: grid;
-  min-height: 100vh;
-  place-items: center;
-  padding: 22px;
+  min-height: 100svh;
+  padding: clamp(18px, 5vw, 56px);
   background:
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.96), transparent 34rem),
-    linear-gradient(180deg, #f8fafc, #e9eef4);
+    radial-gradient(circle at 16% 8%, rgba(255, 255, 255, 0.95), transparent 22rem),
+    radial-gradient(circle at 86% 4%, rgba(203, 213, 225, 0.62), transparent 24rem),
+    linear-gradient(145deg, #f8fafc 0%, #edf2f6 46%, #dfe7ee 100%);
 }
 
 .hub-card {
-  width: min(440px, 100%);
-  padding: 28px;
-  border: 1px solid rgba(215, 224, 231, 0.9);
+  width: min(560px, 100%);
+  margin: auto;
+  padding: clamp(26px, 6vw, 42px);
+  border: 1px solid var(--hub-line);
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.74);
-  box-shadow: 0 28px 80px rgba(31, 38, 46, 0.12);
+  background: var(--hub-panel);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.9),
+    0 28px 90px rgba(31, 38, 46, 0.16);
+}
+
+.hub-brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  margin: 0 0 30px;
+  color: var(--hub-ink);
+  font-size: 17px;
+  font-weight: 840;
+}
+
+.hub-brand span:last-child {
+  color: #7a848e;
+  font-weight: 400;
 }
 
 .eyebrow {
-  margin: 0 0 8px;
-  color: #6b7280;
-  font-size: 12px;
-  font-weight: 800;
+  margin: 0 0 10px;
+  color: var(--hub-muted);
+  font-size: 11px;
+  font-weight: 820;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
 h1 {
-  margin: 0 0 8px;
-  font-size: 36px;
+  margin: 0 0 10px;
+  color: var(--hub-ink);
+  font-size: clamp(46px, 13vw, 72px);
+  line-height: 0.92;
   letter-spacing: 0;
 }
 
 .hub-copy,
 .hub-empty {
-  margin: 0 0 20px;
-  color: #66717b;
+  margin: 0 0 24px;
+  color: var(--hub-muted);
+  font-size: clamp(16px, 4vw, 20px);
   line-height: 1.5;
 }
 
 .hub-links {
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
-.hub-links a {
+.hub-link {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 52px;
-  padding: 0 16px;
-  border: 1px solid rgba(215, 224, 231, 0.92);
-  border-radius: 15px;
-  color: inherit;
-  background: rgba(255, 255, 255, 0.68);
-  font-weight: 760;
+  min-height: 58px;
+  padding: 0 18px;
+  border: 1px solid var(--hub-line);
+  border-radius: 16px;
+  color: var(--hub-ink);
+  background: var(--hub-surface);
+  box-shadow: 0 10px 22px rgba(31, 38, 46, 0.055);
+  font-size: 16px;
+  font-weight: 780;
   text-decoration: none;
 }
 
+.hub-link::after {
+  content: "Open";
+  color: var(--hub-muted);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.hub-link:active {
+  transform: translateY(1px);
+}
+
 .hub-shell[data-preset="japanese"] {
+  --hub-accent: #dc2626;
   background: linear-gradient(135deg, #fff7ed, #fee2e2);
 }
 
 .hub-shell[data-preset="luxury"] {
-  background: linear-gradient(135deg, #fbf7ed, #d9c27a);
+  --hub-accent: #b68a2c;
+  background: linear-gradient(135deg, #fbf7ed, #efe2bd);
 }
 
 .hub-shell[data-preset="cyberpunk"] {
-  color: #ecfeff;
-  background: linear-gradient(135deg, #09090b, #155e75);
+  --hub-accent: #06b6d4;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(6, 182, 212, 0.28), transparent 22rem),
+    linear-gradient(135deg, #e9f7fb 0%, #f8fafc 48%, #dcecf3 100%);
 }
 
 .hub-shell[data-preset="corporate"] {
+  --hub-accent: #2563eb;
   background: linear-gradient(135deg, #f8fafc, #dbeafe);
 }
 
 .hub-shell[data-preset="event"] {
+  --hub-accent: #d946ef;
   background: linear-gradient(135deg, #fdf4ff, #f5d0fe);
 }
 
 .hub-shell[data-preset="wedding"] {
+  --hub-accent: #d4a373;
   background: linear-gradient(135deg, #fffaf5, #fde6d2);
+}
+
+.hub-card {
+  border-top: 4px solid var(--hub-accent);
 }
 
 @media (max-width: 420px) {
   .hub-shell {
-    padding: 12px;
+    align-items: start;
+    padding: 16px;
   }
 
   .hub-card {
-    padding: 22px;
+    margin: clamp(18px, 8vh, 70px) auto 0;
+    padding: 24px 20px;
     border-radius: 20px;
+  }
+
+  .hub-brand {
+    margin-bottom: 24px;
+    font-size: 16px;
+  }
+
+  .hub-link {
+    min-height: 56px;
+    border-radius: 14px;
   }
 }
