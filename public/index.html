@@ -39,32 +39,8 @@
             <span id="status">Ready</span>
           </header>
 
-          <div class="control-strip">
-            <div class="mode-shell">
-              <span>Error correction</span>
-              <div class="mode-bar liquid-switch" aria-label="Error correction">
-                <span class="liquid-indicator" aria-hidden="true"></span>
-                <button type="button" data-level="L">Low</button>
-                <button type="button" data-level="M" class="selected">Medium</button>
-                <button type="button" data-level="Q">Quartile</button>
-                <button type="button" data-level="H">High</button>
-              </div>
-              <select id="level" hidden aria-label="Error correction">
-                <option value="L">Low</option>
-                <option value="M" selected>Medium</option>
-                <option value="Q">Quartile</option>
-                <option value="H">High</option>
-              </select>
-            </div>
-            <div class="action-row">
-              <button id="simplify" type="button">Make simpler</button>
-              <a id="download-png" class="primary-button" download="qr-code.png">Download PNG</a>
-              <a id="download-svg" download="qr-code.svg">Download SVG</a>
-            </div>
-          </div>
-
           <div class="editor-grid">
-            <article class="editor-card">
+            <article class="editor-card input-card">
               <header>
                 <div>
                   <h3>Input</h3>
@@ -88,30 +64,60 @@
                 </div>
               </div>
             </article>
-          </div>
 
-          <footer class="tool-footer">
-            <div>
-              <p>
-                Dense QR codes usually mean the encoded text is long. Use a shorter URL and low error correction when you need a cleaner scan.
-              </p>
-            </div>
-            <div class="metrics">
-              <label class="metric input-metric" for="margin">
-                <span>Quiet zone</span>
-                <input id="margin" type="number" min="0" max="8" value="2" />
-              </label>
-              <label class="metric input-metric" for="size">
-                <span>Size</span>
-                <input id="size" type="number" min="128" max="2048" step="32" value="512" />
-              </label>
-              <div class="metric color-metric">
-                <span>Colors</span>
-                <label for="dark">Code <input id="dark" type="color" value="#111827" /></label>
-                <label for="light">Back <input id="light" type="color" value="#ffffff" /></label>
+            <div class="control-strip">
+              <div class="mode-shell">
+                <span>Error correction</span>
+                <div class="mode-bar liquid-switch" aria-label="Error correction">
+                  <span class="liquid-indicator" aria-hidden="true"></span>
+                  <button type="button" data-level="L">Low</button>
+                  <button type="button" data-level="M" class="selected">Medium</button>
+                  <button type="button" data-level="Q">Quartile</button>
+                  <button type="button" data-level="H">High</button>
+                </div>
+                <select id="level" hidden aria-label="Error correction">
+                  <option value="L">Low</option>
+                  <option value="M" selected>Medium</option>
+                  <option value="Q">Quartile</option>
+                  <option value="H">High</option>
+                </select>
+              </div>
+              <div class="action-row">
+                <button id="simplify" type="button">Make simpler</button>
+                <a id="download-png" class="primary-button" download="qr-code.png">Download PNG</a>
+                <a id="download-svg" download="qr-code.svg">Download SVG</a>
               </div>
             </div>
-          </footer>
+
+            <footer class="tool-footer">
+              <div>
+                <p>
+                  Dense QR codes usually mean the encoded text is long. Use a shorter URL and low error correction when you need a cleaner scan.
+                </p>
+              </div>
+              <div class="metrics">
+                <label class="metric input-metric" for="margin">
+                  <span>Quiet zone</span>
+                  <input id="margin" type="number" min="0" max="8" value="2" />
+                </label>
+                <label class="metric input-metric" for="size">
+                  <span>Size</span>
+                  <input id="size" type="number" min="128" max="2048" step="32" value="512" />
+                </label>
+                <div class="metric color-metric">
+                  <span>Colors</span>
+                  <label for="dark">Code <input id="dark" type="color" value="#111827" /></label>
+                  <label for="light">Back <input id="light" type="color" value="#ffffff" /></label>
+                </div>
+                <div class="metric logo-metric">
+                  <span>Logo</span>
+                  <label class="logo-upload" for="logo">Upload</label>
+                  <input id="logo" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" />
+                  <button id="remove-logo" type="button" hidden>Remove</button>
+                </div>
+              </div>
+            </footer>
+          </div>
         </section>
       </section>
 

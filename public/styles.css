@@ -300,12 +300,14 @@ h1 {
 }
 
 .control-strip {
+  grid-area: controls;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 18px;
+  gap: 12px;
   align-items: center;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  min-height: 76px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-bottom: 1px solid rgba(224, 231, 237, 0.62);
   background: rgba(251, 252, 253, 0.38);
 }
@@ -313,14 +315,15 @@ h1 {
 .mode-shell {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
 }
 
 .mode-shell > span {
   color: #6d7781;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 760;
+  white-space: nowrap;
 }
 
 .mode-bar {
@@ -331,7 +334,7 @@ h1 {
   grid-template-columns: repeat(var(--item-count), minmax(max-content, 1fr));
   gap: 0;
   max-width: 100%;
-  padding: 5px;
+  padding: 4px;
   border: 1px solid rgba(255, 255, 255, 0.58);
   border-radius: 17px;
   background:
@@ -346,10 +349,10 @@ h1 {
 .liquid-indicator {
   position: absolute;
   z-index: 0;
-  top: 5px;
-  bottom: 5px;
-  left: 5px;
-  width: calc((100% - 10px) / var(--item-count));
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / var(--item-count));
   border: 1px solid rgba(255, 255, 255, 0.78);
   border-radius: 12px;
   background:
@@ -372,7 +375,7 @@ h1 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
+  min-height: 38px;
   border-radius: 12px;
   white-space: nowrap;
   font-size: 13px;
@@ -382,7 +385,7 @@ h1 {
 .mode-bar button {
   position: relative;
   z-index: 1;
-  padding: 0 16px;
+  padding: 0 14px;
   color: #65707b;
   background: transparent;
   transition: color 260ms ease;
@@ -396,12 +399,12 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 7px;
 }
 
 .action-row button,
 .action-row a {
-  padding: 0 15px;
+  padding: 0 14px;
   color: #34404a;
   border: 1px solid rgba(255, 255, 255, 0.72);
   background:
@@ -420,7 +423,11 @@ h1 {
 
 .editor-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.85fr);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.46fr);
+  grid-template-areas:
+    "input input"
+    "preview settings"
+    "controls settings";
   border-bottom: 1px solid rgba(224, 231, 237, 0.62);
   background: rgba(255, 255, 255, 0.22);
 }
@@ -433,7 +440,19 @@ h1 {
   background: rgba(255, 255, 255, 0.3);
 }
 
-.editor-card + .editor-card {
+.input-card {
+  grid-area: input;
+  min-height: 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(224, 231, 237, 0.62);
+}
+
+.preview-card {
+  grid-area: preview;
+}
+
+.tool-footer {
+  grid-area: settings;
   border-left: 1px solid rgba(224, 231, 237, 0.62);
 }
 
@@ -459,9 +478,10 @@ h1 {
 
 textarea {
   width: 100%;
-  height: 100%;
-  min-height: 390px;
-  padding: 18px;
+  height: 56px;
+  min-height: 56px;
+  max-height: 56px;
+  padding: 0 18px;
   border: 1px solid rgba(255, 255, 255, 0.72);
   border-radius: 22px;
   outline: 0;
@@ -472,9 +492,12 @@ textarea {
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.86), 0 12px 30px rgba(31, 38, 46, 0.05);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
+  overflow-x: auto;
+  overflow-y: hidden;
   resize: none;
   font-size: 15.5px;
-  line-height: 1.7;
+  line-height: 54px;
+  white-space: nowrap;
 }
 
 textarea:focus,
@@ -525,34 +548,39 @@ input:focus {
 
 .tool-footer {
   display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(520px, 1fr);
-  gap: 16px;
-  padding-top: 16px;
-  padding-bottom: 18px;
-  align-items: center;
+  grid-template-columns: 1fr;
+  align-content: start;
+  gap: 12px;
+  padding: 18px 20px 20px;
+  align-items: start;
   background: rgba(251, 252, 253, 0.34);
 }
 
 .tool-footer p {
   margin: 0;
   color: #65707a;
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .metrics {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.color-metric,
+.logo-metric {
+  grid-column: 1 / -1;
 }
 
 .metric {
-  min-height: 96px;
-  padding: 13px;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.56);
-  box-shadow: inset 0 1px rgba(255, 255, 255, 0.82);
+  min-height: 0;
+  padding: 12px;
+  border: 1px solid rgba(218, 226, 233, 0.72);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.46);
+  box-shadow: 0 10px 24px rgba(31, 38, 46, 0.035);
 }
 
 .metric span,
@@ -570,24 +598,69 @@ input:focus {
 
 .input-metric input {
   width: 100%;
-  min-height: 38px;
+  min-height: 36px;
   padding: 0 11px;
   border: 1px solid rgba(215, 224, 231, 0.92);
-  border-radius: 12px;
+  border-radius: 11px;
   color: #20262d;
   background: rgba(255, 255, 255, 0.66);
+}
+
+.color-metric {
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px 12px;
+}
+
+.color-metric > span {
+  align-self: center;
 }
 
 .color-metric label {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 8px;
 }
 
+.logo-metric {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-metric input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.logo-upload,
+.logo-metric button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(215, 224, 231, 0.92);
+  border-radius: 11px;
+  color: #20262d;
+  background: rgba(255, 255, 255, 0.66);
+  font-size: 12px;
+  font-weight: 760;
+  white-space: nowrap;
+}
+
+.logo-metric button[hidden] {
+  display: none;
+}
+
 input[type="color"] {
-  width: 38px;
-  height: 30px;
+  width: 34px;
+  height: 28px;
   padding: 2px;
   border: 1px solid rgba(215, 224, 231, 0.92);
   border-radius: 10px;
@@ -697,7 +770,9 @@ input[type="color"] {
 .site-shell[data-theme="dark"] .tool-header,
 .site-shell[data-theme="dark"] .control-strip,
 .site-shell[data-theme="dark"] .editor-grid,
-.site-shell[data-theme="dark"] .editor-card + .editor-card {
+.site-shell[data-theme="dark"] .input-card,
+.site-shell[data-theme="dark"] .preview-card,
+.site-shell[data-theme="dark"] .tool-footer {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -713,6 +788,8 @@ input[type="color"] {
 .site-shell[data-theme="dark"] .metric,
 .site-shell[data-theme="dark"] .mode-bar,
 .site-shell[data-theme="dark"] .input-metric input,
+.site-shell[data-theme="dark"] .logo-upload,
+.site-shell[data-theme="dark"] .logo-metric button,
 .site-shell[data-theme="dark"] input[type="color"] {
   border-color: rgba(180, 194, 208, 0.14);
   color: #eef3f7;
@@ -772,23 +849,31 @@ input[type="color"] {
     font-size: clamp(42px, 13vw, 86px);
   }
 
-  .control-strip,
-  .editor-grid,
-  .tool-footer {
+  .control-strip {
     grid-template-columns: 1fr;
-  }
-
-  .editor-card + .editor-card {
-    border-left: 0;
-    border-top: 1px solid rgba(224, 231, 237, 0.62);
   }
 
   .tool-footer {
     align-items: start;
   }
+}
 
-  .metrics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 1260px) {
+  .control-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .mode-shell,
+  .mode-bar {
+    width: 100%;
+  }
+
+  .mode-bar {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .action-row {
+    justify-content: flex-start;
   }
 }
 
@@ -894,6 +979,37 @@ input[type="color"] {
     padding: 16px 14px;
   }
 
+  .editor-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "input"
+      "preview"
+      "controls"
+      "settings";
+  }
+
+  .input-card {
+    order: 0;
+  }
+
+  .preview-card {
+    order: 0;
+  }
+
+  .preview-card {
+    border-bottom: 1px solid rgba(224, 231, 237, 0.62);
+  }
+
+  .tool-footer {
+    order: 0;
+    border-left: 0;
+  }
+
+  .control-strip {
+    order: 0;
+  }
+
   textarea {
     height: 52px;
     min-height: 52px;
@@ -937,6 +1053,12 @@ input[type="color"] {
     grid-template-columns: 1fr auto auto;
     align-items: center;
     gap: 8px 14px;
+  }
+
+  .logo-metric {
+    grid-column: 1 / -1;
+    min-height: 50px;
+    grid-template-columns: 1fr auto auto;
   }
 
   .color-metric > span {
