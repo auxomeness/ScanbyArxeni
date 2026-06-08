@@ -792,6 +792,12 @@ modeButtons.forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-footer-mode]").forEach((link) => {
+  link.addEventListener("click", () => {
+    setMode(link.dataset.footerMode);
+  });
+});
+
 preset.addEventListener("change", () => {
   applyPreset(preset.value);
 });
