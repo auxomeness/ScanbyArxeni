@@ -1,0 +1,21 @@
+{
+  "name": "scan-by-arxeni",
+  "version": "1.0.0",
+  "description": "Static QR code generator for permanent destinations.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:prod": "NODE_ENV=production node server.js"
+  },
+  "keywords": [
+    "qr",
+    "qrcode",
+    "generator"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}

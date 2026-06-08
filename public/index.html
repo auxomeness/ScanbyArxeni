@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scan by Arxeni</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="site-shell" data-theme="light">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand brand-lockup" href="#workspace"><span>Scan</span> <span class="brand-muted">by Arxeni</span></a>
+        <div class="nav-links">
+          <a href="#workspace">Workspace</a>
+        </div>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="theme-toggle" type="button">Dark</button>
+          <a class="nav-action" href="#workspace">Generate</a>
+        </div>
+      </nav>
+
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Static QR studio</p>
+          <h1 id="page-title"><span>Scan</span> <span class="brand-muted">by Arxeni</span></h1>
+          <p class="hero-text">
+            Create static PNG or SVG QR codes for permanent links. The code itself does not expire; just keep the destination URL alive.
+          </p>
+        </div>
+      </section>
+
+      <section class="tool-wrap" id="workspace">
+        <section class="tool-panel" aria-label="QR code generator">
+          <header class="tool-header">
+            <div>
+              <p><span>Scan</span> <span class="brand-muted">by Arxeni</span></p>
+              <h2>Static QR workspace</h2>
+            </div>
+            <span id="status">Ready</span>
+          </header>
+
+          <div class="control-strip">
+            <div class="mode-shell">
+              <span>Error correction</span>
+              <div class="mode-bar liquid-switch" aria-label="Error correction">
+                <span class="liquid-indicator" aria-hidden="true"></span>
+                <button type="button" data-level="L">Low</button>
+                <button type="button" data-level="M" class="selected">Medium</button>
+                <button type="button" data-level="Q">Quartile</button>
+                <button type="button" data-level="H">High</button>
+              </div>
+              <select id="level" hidden aria-label="Error correction">
+                <option value="L">Low</option>
+                <option value="M" selected>Medium</option>
+                <option value="Q">Quartile</option>
+                <option value="H">High</option>
+              </select>
+            </div>
+            <div class="action-row">
+              <button id="simplify" type="button">Make simpler</button>
+              <a id="download-png" class="primary-button" download="qr-code.png">Download PNG</a>
+              <a id="download-svg" download="qr-code.svg">Download SVG</a>
+            </div>
+          </div>
+
+          <div class="editor-grid">
+            <article class="editor-card">
+              <header>
+                <div>
+                  <h3>Input</h3>
+                  <span>Text or URL</span>
+                </div>
+              </header>
+              <label class="visually-hidden" for="qr-input">Text or URL</label>
+              <textarea id="qr-input" rows="8" spellcheck="false">https://example.com</textarea>
+            </article>
+
+            <article class="editor-card preview-card" aria-live="polite">
+              <header>
+                <div>
+                  <h3>Preview</h3>
+                  <span>PNG and SVG export</span>
+                </div>
+              </header>
+              <div class="qr-stage">
+                <div class="qr-card">
+                  <img id="qr-preview" alt="Generated QR code preview" />
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <footer class="tool-footer">
+            <div>
+              <p>
+                Dense QR codes usually mean the encoded text is long. Use a shorter URL and low error correction when you need a cleaner scan.
+              </p>
+            </div>
+            <div class="metrics">
+              <label class="metric input-metric" for="margin">
+                <span>Quiet zone</span>
+                <input id="margin" type="number" min="0" max="8" value="2" />
+              </label>
+              <label class="metric input-metric" for="size">
+                <span>Size</span>
+                <input id="size" type="number" min="128" max="2048" step="32" value="512" />
+              </label>
+              <div class="metric color-metric">
+                <span>Colors</span>
+                <label for="dark">Code <input id="dark" type="color" value="#111827" /></label>
+                <label for="light">Back <input id="light" type="color" value="#ffffff" /></label>
+              </div>
+            </div>
+          </footer>
+        </section>
+      </section>
+
+      <footer class="page-footer">
+        <div class="page-footer-inner">
+          <a class="footer-brand brand-lockup" href="#workspace"><span>Scan</span> <span class="brand-muted">by Arxeni</span></a>
+          <p>Static QR codes for permanent destinations. No expiring redirect service.</p>
+        </div>
+      </footer>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
