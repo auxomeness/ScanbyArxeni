@@ -113,6 +113,7 @@ a {
   display: inline-flex;
   align-items: baseline;
   gap: 0.28em;
+  min-width: 0;
 }
 
 .brand-muted {
@@ -206,6 +207,7 @@ h1 {
   font-size: clamp(48px, 8vw, 118px);
   line-height: 0.9;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
 }
 
 .hero-text {
@@ -504,6 +506,7 @@ input:focus {
   display: grid;
   place-items: center;
   width: min(100%, 380px);
+  max-width: 100%;
   aspect-ratio: 1;
   padding: 20px;
   border: 1px solid rgba(218, 226, 233, 0.72);
@@ -780,6 +783,10 @@ input[type="color"] {
     border-top: 1px solid rgba(224, 231, 237, 0.62);
   }
 
+  .tool-footer {
+    align-items: start;
+  }
+
   .metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -813,6 +820,12 @@ input[type="color"] {
     height: auto;
     min-height: 58px;
     border-radius: 20px;
+    gap: 12px;
+    padding: 8px 10px 8px 14px;
+  }
+
+  .brand {
+    font-size: 17px;
   }
 
   .nav-action {
@@ -840,7 +853,14 @@ input[type="color"] {
   }
 
   .mode-bar {
-    grid-template-columns: repeat(4, minmax(92px, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .mode-bar button {
+    min-width: 0;
+    padding: 0 8px;
+    font-size: 12px;
   }
 
   .action-row a,
@@ -849,11 +869,95 @@ input[type="color"] {
   }
 
   .editor-card {
-    min-height: 420px;
+    min-height: 0;
     padding: 16px 14px;
+  }
+
+  textarea {
+    min-height: 190px;
+  }
+
+  .qr-stage {
+    min-height: 0;
+  }
+
+  .qr-card {
+    width: min(100%, 320px);
+    padding: 14px;
   }
 
   .metrics {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-shell {
+    padding: 10px;
+  }
+
+  .hero {
+    margin: 46px auto 22px;
+  }
+
+  h1 {
+    font-size: clamp(38px, 15vw, 58px);
+    line-height: 0.96;
+  }
+
+  .hero-text {
+    font-size: 15px;
+  }
+
+  .tool-wrap {
+    margin-top: 24px;
+  }
+
+  .tool-panel {
+    border-radius: 22px;
+  }
+
+  .tool-header h2 {
+    font-size: 24px;
+  }
+
+  .tool-header > span {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .control-strip {
+    gap: 12px;
+  }
+
+  .mode-bar {
+    padding: 4px;
+  }
+
+  .mode-bar button {
+    min-height: 36px;
+    padding: 0 5px;
+    font-size: 11px;
+  }
+
+  .liquid-indicator {
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc((100% - 8px) / var(--item-count));
+  }
+
+  .qr-card {
+    width: min(100%, 280px);
+    padding: 12px;
+  }
+
+  .page-footer {
+    width: calc(100% + 20px);
+    margin: 36px -10px -10px;
+  }
+
+  .page-footer-inner {
+    width: calc(100% - 20px);
   }
 }
