@@ -39,6 +39,12 @@
             <span id="status">Ready</span>
           </header>
 
+          <div class="mode-tabs" aria-label="Workspace mode">
+            <button class="selected" type="button" data-mode="single">Single QR</button>
+            <button type="button" data-mode="hub">QR Hub</button>
+            <button type="button" data-mode="identify">Identify QR</button>
+          </div>
+
           <div class="editor-grid">
             <article class="editor-card input-card">
               <header>
@@ -47,8 +53,43 @@
                   <span>Text or URL</span>
                 </div>
               </header>
-              <label class="visually-hidden" for="qr-input">Text or URL</label>
-              <textarea id="qr-input" rows="8" spellcheck="false" wrap="off">https://example.com</textarea>
+              <div class="single-panel">
+                <label class="visually-hidden" for="qr-input">Text or URL</label>
+                <textarea id="qr-input" rows="8" spellcheck="false" wrap="off">https://example.com</textarea>
+              </div>
+              <div class="hub-panel" hidden>
+                <div class="hub-grid">
+                  <label>Website <input id="hub-website" type="url" placeholder="https://example.com" /></label>
+                  <label>Facebook <input id="hub-facebook" type="url" placeholder="https://facebook.com/..." /></label>
+                  <label>Instagram <input id="hub-instagram" type="url" placeholder="https://instagram.com/..." /></label>
+                  <label>Menu <input id="hub-menu" type="url" placeholder="https://example.com/menu" /></label>
+                  <label>Contact card <input id="hub-contact" type="text" placeholder="Name, phone, email, or vCard link" /></label>
+                </div>
+              </div>
+              <div class="identify-panel" hidden>
+                <header>
+                  <div>
+                    <h3>Identify QR</h3>
+                    <span>Upload an image or scan with camera</span>
+                  </div>
+                </header>
+                <div class="identify-actions">
+                  <label class="identify-upload" for="identify-file">Upload QR</label>
+                  <input id="identify-file" type="file" accept="image/png,image/jpeg,image/webp,image/gif" />
+                  <button id="start-camera" type="button">Start camera</button>
+                  <button id="stop-camera" type="button" hidden>Stop</button>
+                </div>
+                <video id="scanner-video" playsinline muted hidden></video>
+                <div class="identify-result" hidden>
+                  <span>Decoded result</span>
+                  <p id="decoded-result"></p>
+                  <div class="identify-result-actions">
+                    <button id="use-decoded" type="button">Use in generator</button>
+                    <a id="open-decoded" target="_blank" rel="noreferrer">Open link</a>
+                    <button id="copy-decoded" type="button">Copy</button>
+                  </div>
+                </div>
+              </div>
             </article>
 
             <article class="editor-card preview-card" aria-live="polite">
@@ -58,6 +99,29 @@
                   <span>PNG and SVG export</span>
                 </div>
               </header>
+              <div class="control-strip">
+                <div class="mode-shell">
+                  <span>Error correction</span>
+                  <div class="mode-bar liquid-switch" aria-label="Error correction">
+                    <span class="liquid-indicator" aria-hidden="true"></span>
+                    <button type="button" data-level="L">Low</button>
+                    <button type="button" data-level="M" class="selected">Medium</button>
+                    <button type="button" data-level="Q">Quartile</button>
+                    <button type="button" data-level="H">High</button>
+                  </div>
+                  <select id="level" hidden aria-label="Error correction">
+                    <option value="L">Low</option>
+                    <option value="M" selected>Medium</option>
+                    <option value="Q">Quartile</option>
+                    <option value="H">High</option>
+                  </select>
+                </div>
+                <div class="action-row">
+                  <button id="simplify" type="button">Make simpler</button>
+                  <a id="download-png" class="primary-button" download="qr-code.png">Download PNG</a>
+                  <a id="download-svg" download="qr-code.svg">Download SVG</a>
+                </div>
+              </div>
               <div class="qr-stage">
                 <div class="qr-card">
                   <img id="qr-preview" alt="Generated QR code preview" />
@@ -65,36 +129,24 @@
               </div>
             </article>
 
-            <div class="control-strip">
-              <div class="mode-shell">
-                <span>Error correction</span>
-                <div class="mode-bar liquid-switch" aria-label="Error correction">
-                  <span class="liquid-indicator" aria-hidden="true"></span>
-                  <button type="button" data-level="L">Low</button>
-                  <button type="button" data-level="M" class="selected">Medium</button>
-                  <button type="button" data-level="Q">Quartile</button>
-                  <button type="button" data-level="H">High</button>
-                </div>
-                <select id="level" hidden aria-label="Error correction">
-                  <option value="L">Low</option>
-                  <option value="M" selected>Medium</option>
-                  <option value="Q">Quartile</option>
-                  <option value="H">High</option>
-                </select>
-              </div>
-              <div class="action-row">
-                <button id="simplify" type="button">Make simpler</button>
-                <a id="download-png" class="primary-button" download="qr-code.png">Download PNG</a>
-                <a id="download-svg" download="qr-code.svg">Download SVG</a>
-              </div>
-            </div>
-
             <footer class="tool-footer">
               <div>
                 <p>
                   Dense QR codes usually mean the encoded text is long. Use a shorter URL and low error correction when you need a cleaner scan.
                 </p>
               </div>
+              <label class="preset-control" for="preset">
+                <span>Preset</span>
+                <select id="preset">
+                  <option value="minimal">Minimal</option>
+                  <option value="japanese">Japanese</option>
+                  <option value="luxury">Luxury</option>
+                  <option value="cyberpunk">Cyberpunk</option>
+                  <option value="corporate">Corporate</option>
+                  <option value="event">Event</option>
+                  <option value="wedding">Wedding</option>
+                </select>
+              </label>
               <div class="metrics">
                 <label class="metric input-metric" for="margin">
                   <span>Quiet zone</span>
@@ -106,8 +158,59 @@
                 </label>
                 <div class="metric color-metric">
                   <span>Colors</span>
-                  <label for="dark">Code <input id="dark" type="color" value="#111827" /></label>
-                  <label for="light">Back <input id="light" type="color" value="#ffffff" /></label>
+                  <div class="color-controls">
+                    <label class="color-choice" for="dark">
+                      <span>Code</span>
+                      <input id="dark" type="color" value="#111827" />
+                    </label>
+                    <label class="color-choice" for="light">
+                      <span>Back</span>
+                      <input id="light" type="color" value="#ffffff" />
+                    </label>
+                    <label class="gradient-toggle" for="gradient">
+                      <input id="gradient" type="checkbox" />
+                      <span>Gradient</span>
+                    </label>
+                    <label class="color-choice accent-choice" for="accent">
+                      <span>Accent</span>
+                      <input id="accent" type="color" value="#64748b" />
+                    </label>
+                    <label class="transparent-toggle" for="transparent">
+                      <input id="transparent" type="checkbox" />
+                      <span>Transparent</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="metric shape-metric">
+                  <span>Shape</span>
+                  <div class="shape-controls">
+                    <label for="body-shape">
+                      <span>Body</span>
+                      <select id="body-shape">
+                        <option value="square">Square</option>
+                        <option value="rounded">Soft</option>
+                        <option value="dots">Dots</option>
+                        <option value="diamond">Diamond</option>
+                        <option value="bars">Bars</option>
+                      </select>
+                    </label>
+                    <label for="outer-eye-shape">
+                      <span>Outer eye</span>
+                      <select id="outer-eye-shape">
+                        <option value="square">Square</option>
+                        <option value="rounded">Soft</option>
+                        <option value="circle">Circle</option>
+                      </select>
+                    </label>
+                    <label for="inner-eye-shape">
+                      <span>Inner eye</span>
+                      <select id="inner-eye-shape">
+                        <option value="square">Square</option>
+                        <option value="circle">Circle</option>
+                        <option value="diamond">Diamond</option>
+                      </select>
+                    </label>
+                  </div>
                 </div>
                 <div class="metric logo-metric">
                   <span>Logo</span>
@@ -129,6 +232,7 @@
       </footer>
     </main>
 
+    <script src="/vendor/jsqr.min.js"></script>
     <script src="/app.js"></script>
   </body>
 </html>

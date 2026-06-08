@@ -68,6 +68,27 @@ async function handleQr(req, res, url) {
   }
 }
 
+function handleQrMatrix(req, res, url) {
+  const data = url.searchParams.get("data") || "";
+
+  if (!data.trim()) {
+    sendJson(res, 400, { error: "Enter text or a URL to generate a QR code." });
+    return;
+  }
+
+  try {
+    const options = getOptions(url.searchParams);
+    const qr = QRCode.create(data, { errorCorrectionLevel: options.errorCorrectionLevel });
+
+    sendJson(res, 200, {
+      size: qr.modules.size,
+      data: Array.from(qr.modules.data),
+    });
+  } catch (error) {
+    sendJson(res, 500, { error: error.message });
+  }
+}
+
 function serveStatic(req, res, url) {
   const requestedPath = url.pathname === "/" ? "/index.html" : url.pathname;
   const safePath = path.normalize(requestedPath).replace(/^(\.\.[/\\])+/, "");
@@ -91,6 +112,11 @@ function serveStatic(req, res, url) {
 
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
+
+  if (url.pathname === "/api/qr-matrix") {
+    handleQrMatrix(req, res, url);
+    return;
+  }
 
   if (url.pathname === "/api/qr" || url.pathname === "/api/qr.png" || url.pathname === "/api/qr.svg") {
     handleQr(req, res, url);
