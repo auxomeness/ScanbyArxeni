@@ -98,3 +98,7 @@ Scan by Arxeni works well for:
 ## Important Note
 
 Scan by Arxeni does not make broken links permanent. The QR code can be permanent, but the destination must stay alive.
+
+## Author
+
+Karl Austin B. Pavia
