@@ -797,6 +797,27 @@ input[type="color"] {
     padding: 12px;
   }
 
+  .tool-panel {
+    display: grid;
+  }
+
+  .tool-header {
+    order: 1;
+  }
+
+  .editor-grid {
+    order: 2;
+  }
+
+  .control-strip {
+    order: 3;
+    border-top: 1px solid rgba(224, 231, 237, 0.62);
+  }
+
+  .tool-footer {
+    order: 4;
+  }
+
   .page-footer {
     width: calc(100% + 24px);
     margin: 42px -12px -12px;
@@ -874,7 +895,13 @@ input[type="color"] {
   }
 
   textarea {
-    min-height: 190px;
+    height: 52px;
+    min-height: 52px;
+    max-height: 52px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    resize: none;
+    white-space: nowrap;
   }
 
   .qr-stage {
